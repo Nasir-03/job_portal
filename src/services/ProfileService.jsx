@@ -1,7 +1,4 @@
-// import axiosInstance from "axiosInstance";
 import axiosInstance from "../interceptor/AxiosInterCeptor";
-
-const base_url = "http://localhost:8080/profile/";
 
 export const getUserProfile = async(userId) => {
     try{

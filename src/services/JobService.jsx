@@ -1,5 +1,3 @@
-const base_url = "http://localhost:8080/jobs/";
-// import axiosInstance from "axiosInstance";
 import axiosInstance from "../interceptor/AxiosInterCeptor";
 
 export const postJob = async(data) => {
@@ -40,7 +38,7 @@ export const applyJob = async(id,data) => {
 
 export const getJobPostedBy = async(id) => {
   try{
-     const res = axiosInstance.get(`/jobs/PostedBy/${id}`)
+     const res = await axiosInstance.get(`/jobs/PostedBy/${id}`)
      return res.data;
   }catch(err){
     throw err;
@@ -49,7 +47,7 @@ export const getJobPostedBy = async(id) => {
 
 export const changeStatus = async(data) => {
      try{
-     const res = axiosInstance.post(`/jobs/changeAppStatus`,data)
+     const res = await axiosInstance.post(`/jobs/changeAppStatus`,data)
      return res.data;
   }catch(err){
     throw err;
