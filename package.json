@@ -9,7 +9,6 @@
     "lint": "eslint .",
     "preview": "vite preview"
   },
-
   "dependencies": {
     "@reduxjs/toolkit": "^2.8.2",
     "@tabler/icons-react": "^3.34.0",
@@ -42,8 +41,7 @@
     "vite": "^7.0.4"
   },
   "engines": {
-  "node": "20.5.1",
-  "npm": "9.x"
-}
-
+    "node": "20.x",
+    "npm": "9.x"
+  }
 }
