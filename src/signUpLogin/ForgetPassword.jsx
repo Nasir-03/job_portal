@@ -100,7 +100,7 @@ const ForgetPassword = ({isAllow}) => {
 
   return (
     <div className="w-full h-screen fixed top-0 left-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-    <div className="relative bg-mine-shaft-900 p-6 rounded-lg w-[30vw] lg-mx:w-[40vw] md-mx-w-[60vw]">
+    <div className="relative bg-mine-shaft-900 p-6 rounded-lg w-[30vw] lg-mx:w-[40vw] md-mx-w-[80vw]">
        <div>
            <h1 className="text-2xl lg-mx:text-xl text-center text-mine-shaft-300 font-bold mb-4">
         Forget Password
@@ -131,7 +131,7 @@ const ForgetPassword = ({isAllow}) => {
             disabled={isLoading || isOtpSent}
           >
             {isLoading ? (
-              <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+              <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin md-mx:w-2 md-mx:h-2"></div>
             ) : (
               "Send OTP"
             )}

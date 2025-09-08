@@ -10,10 +10,10 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const [che, setChe] = useState(false);
   const [selectedType, setSelectedType] = useState("APPLICANT");
-  const [errors,setErrors] = useState({})
+  const [errors, setErrors] = useState({});
   const [notification, setNotification] = useState({ msg: "", color: "" });
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setSelectedType(e.target.value);
@@ -23,56 +23,56 @@ const SignUp = () => {
     setChe(!che);
   };
 
+  useEffect(() => {
+    if (notification.msg) {
+      const timer = setTimeout(() => {
+        setNotification({ msg: "", color: "" });
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [notification]);
 
-    useEffect(() => {
-  if (notification.msg) {
-    const timer = setTimeout(() => {
-      setNotification({ msg: "", color: "" });
-    }, 2000);
-    return () => clearTimeout(timer);
-  }
-}, [notification]);
+  const handleSubmit = async () => {
+    const validationError = validateUserForm({
+      name,
+      email,
+      password,
+      termsAccepted: che,
+    });
 
+    if (Object.keys(validationError).length > 0) {
+      setErrors(validationError);
+      return;
+    }
 
-    const handleSubmit = async () => {
-  const validationError = validateUserForm({
-    name,
-    email,
-    password,
-    termsAccepted: che,
-  });
+    setErrors({}); // ✅ clear previous errors if validation passed
 
-  if (Object.keys(validationError).length > 0) {
-    setErrors(validationError);
-    return;
-  }
+    const data = { name, email, password, accountType: selectedType };
+    try {
+      const response = await registerUsers(data);
+      console.log("User registered successfully:", response);
+      setNotification({ msg: "User registered successfully!", color: "green" });
+      setTimeout(() => {
+        navigate("/signup");
+      }, 2000);
+    } catch (error) {
+      console.error(
+        "Registration failed:",
+        error.response?.data || error.message
+      );
+      const errorMessage =
+        error.response?.data?.message ||
+        "Registration failed. Please try again.";
+      setNotification({ msg: errorMessage, color: "red" });
+    }
+  };
 
-  setErrors({}); // ✅ clear previous errors if validation passed
-
-  const data = { name, email, password, accountType: selectedType };
-  try {
-    const response = await registerUsers(data);
-    console.log("User registered successfully:", response);
-     setNotification({ msg: "User registered successfully!", color: "green" });
-     setTimeout(() => {
-    navigate("/login");
-  }, 2000);
-  } catch (error) {
-    console.error(
-      "Registration failed:",
-      error.response?.data || error.message
-    );
-    const errorMessage =
-    error.response?.data?.message || "Registration failed. Please try again.";
-    setNotification({ msg: errorMessage, color: "red" });
-  }
-};
-
-   
   return (
     <div className="w-1/2 px-10 relative">
       <div className="text-center absolute w-96 right-[75%] top-5">
-         {notification.msg && <Notification msg={notification.msg} color={notification.color} />}
+        {notification.msg && (
+          <Notification msg={notification.msg} color={notification.color} />
+        )}
       </div>
       <div className="flex flex-col justify-center items-center h-full gap-3">
         <div className="text-mine-shaft-200 text-3xl font-semibold">
@@ -92,7 +92,9 @@ const SignUp = () => {
               onChange={(e) => setName(e.target.value)}
               className="bg-transparent border border-mine-shaft-100 px-3 py-2 text-sm text-mine-shaft-200 w-96 xs-mx:w-64"
             />
-            {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
+            {errors.name && (
+              <p className="text-red-500 text-sm">{errors.name}</p>
+            )}
           </div>
           <div className="flex flex-col items-center gap-2 w-full">
             <label className="text-mine-shaft-200 text-lg">Email</label>
@@ -106,7 +108,9 @@ const SignUp = () => {
               onChange={(e) => setEmail(e.target.value)}
               className="bg-transparent border border-mine-shaft-100 px-3 py-2 text-sm text-mine-shaft-200 w-96 xs-mx:w-64"
             />
-            {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
+            {errors.email && (
+              <p className="text-red-500 text-sm">{errors.email}</p>
+            )}
           </div>
           <div className="flex flex-col items-center gap-2 w-full">
             <label className="text-mine-shaft-200 text-lg">password</label>
@@ -120,11 +124,13 @@ const SignUp = () => {
               onChange={(e) => setPassword(e.target.value)}
               className="bg-transparent border border-mine-shaft-100 px-3 py-2 text-sm text-mine-shaft-200 w-96 xs-mx:w-64"
             />
-            {errors.password && <p className="text-red-500 text-sm w-96">{errors.password}</p>}
+            {errors.password && (
+              <p className="text-red-500 text-sm w-96">{errors.password}</p>
+            )}
           </div>
 
           <div className="flex flex-row xs-mx:flex-col items-center gap-4 [&>label]:text-mine-shaft-300 [&>label]:text-xl">
-             <label
+            <label
               className={`px-6 py-4 flex gap-2 accent-yellow-500 border transition duration-200 ease-in-out ${
                 selectedType === "APPLICANT"
                   ? "border-bright-sun-200"
@@ -158,9 +164,6 @@ const SignUp = () => {
               EMPLOYER
             </label>
           </div>
-
-       
-
         </div>
         <div className="flex items-center">
           <label>
@@ -177,11 +180,19 @@ const SignUp = () => {
           </label>
         </div>
         <div className="w-[57%]">
-          <button
-            className="text-xl bg-yellow-600 text-black px-2 py-2 w-full xs-mx:px-1 xs-mx:py-1 xs-mx:text-sm hover:bg-yellow-400 transition duration-300 ease-in-out"
+          {/* <button
+            className="text-xl bg-yellow-600 text-black px-2 py-2 w-full xs-mx:px-1 xs-mx:py-1 xs-mx:text-sm hover:bg-yellow-400 transition duration-300 ease-in-out rounded-full animate-spin"
             onClick={handleSubmit}
           >
             sign up
+          </button> */}
+
+          <button
+            className="text-xl bg-yellow-600 text-black px-2 py-2 w-full xs-mx:px-1 xs-mx:py-1 xs-mx:text-sm hover:bg-yellow-400 transition duration-300 ease-in-out rounded-full animate-spin"
+            onClick={handleSubmit}
+          >
+            {/* Optionally wrap text in a span to control rotation */}
+            <span className="inline-block">sign up</span>
           </button>
         </div>
         <div className="text-mine-shaft-300 text-lg">
@@ -190,9 +201,8 @@ const SignUp = () => {
           onClick={()=>setErrors({})}>
             Login
           </Link> */}
-
           <Link to="/signup" className="text-bright-sun-400 hover:underline">
-              login
+            login
           </Link>
         </div>
       </div>

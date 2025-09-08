@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "https://jobsportalbackend-2.onrender.com",
+  baseURL: "https://jobs-portal-backend-clqp.onrender.com",
 });
 
 axiosInstance.interceptors.request.use(

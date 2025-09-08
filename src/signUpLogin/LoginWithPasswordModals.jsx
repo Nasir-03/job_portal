@@ -1,24 +1,3 @@
-// import React from 'react'
-// import Login from './Login'
-// import ForgetPassword from './ForgetPassword'
-// import SignUpPage from '../pages/SignUpPage'
-
-// const LoginWithPasswordModals = () => {
-//   return (
-//     <div>
-//       <div className='relative blur-sm bg-white/30'>
-//       {/* <div className="relative backdrop-blur-sm bg-white/30 rounded-xl shadow-md w-fit mx-auto"> */}
-//         <SignUpPage />
-//       </div>
-//       <div className='absolute top-0 left-0 w-full h-full flex items-center justify-center'>
-//         <ForgetPassword />
-//       </div>
-//     </div>
-//   )
-// }
-
-// export default LoginWithPasswordModals
-
 import React from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import Login from "./Login";

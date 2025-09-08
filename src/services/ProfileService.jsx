@@ -2,7 +2,7 @@ import axiosInstance from "../interceptor/AxiosInterCeptor";
 
 export const getUserProfile = async(userId) => {
     try{
-      const res = await axiosInstance.get(`profile/getPro/${userId}`);
+      const res = await axiosInstance.get(`/profile/getPro/${userId}`);
       return res.data;
     }catch(err) {
         throw err;

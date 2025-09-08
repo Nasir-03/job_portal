@@ -68,6 +68,7 @@ const Login = () => {
 
   return (
     <div className="w-1/2 px-10 relative">
+      <div className="pb-5">
       <button
         className="px-2 py-1 mt-2 bg-bright-sun-300 text-bright-sun-400 
       rounded-lg text-xl bg-opacity-15"
@@ -75,6 +76,7 @@ const Login = () => {
       >
         Back
       </button>
+      </div>
       <div className="text-center !absolute w-96 left-[75%] top-5">
         {notification.msg && (
           <Notification msg={notification.msg} color={notification.color} />

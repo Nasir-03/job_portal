@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const base_url = "https://jobsportalbackend-2.onrender.com/auth";
+const base_url = "https://jobs-portal-backend-clqp.onrender.com/auth";
 
 const loginUser = async (login) => {
   try {

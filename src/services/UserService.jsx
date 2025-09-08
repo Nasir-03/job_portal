@@ -1,7 +1,8 @@
 import React from "react";
 import axios from "axios";
 
-const base_url = "https://jobsportalbackend-2.onrender.com/users/";
+// const base_url = "https://jobsportalbackend-2.onrender.com/users/";
+const base_url = "https://jobs-portal-backend-clqp.onrender.com/users/";
 
 export const registerUsers = async (userData) => {
   try {
