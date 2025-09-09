@@ -1,6 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import background from "../assets/background.avif";
-import avatar from "../assets/avataar.jpg";
 import {
   IconMapPin,
   IconPencil,
@@ -20,7 +18,7 @@ const Info = () => {
   const [edit, setEdit] = useState(false);
   const [isFile,setIsFile] = useState(false);
   const [notification, setNotification] = useState("");
-  const [selectedImage, setSelectedImage] = useState(avatar);
+  // const [selectedImage, setSelectedImage] = useState(avatar);
   const [fileObject, setFileObject] = useState(null);
 
    const name = Storage.getItems("user")?.name || "User";
@@ -70,31 +68,6 @@ const handleImageChange = (e) => {
   reader.readAsDataURL(file);
 };
 
-
-//    const handleEdit = async () => {
-//     if (edit){
-//   const formData = new FormData();
-//   formData.append("jobTitle", profileData.jobTitle?.value || "");
-// formData.append("company", profileData.company?.value || "");
-// formData.append("location", profileData.location?.value || "");
-//   if (fileObject) {
-//     formData.append("image", fileObject); // correct: send File
-//   }
-//   try {
-//     const updated = await updateProfile(user.profileId,formData); // use profileId
-//     setProfileData({
-//       jobTitle: { label: updated.jobTitle, value: updated.jobTitle },
-//       company: { label: updated.company, value: updated.company },
-//       location: { label: updated.location, value: updated.location },
-//     });
-//   }
-//   catch (err) {
-//     console.error("Update failed:", err);
-//   }
-// }
-//   setEdit(!edit)
-// };
-
      const handleEdit = async () => {
   if (edit) {
       const userObj = Storage.getItems("user") || {};
@@ -138,8 +111,8 @@ const handleImageChange = (e) => {
 
       <div className="w-full relative">
         <img
-          src={background}
-          alt=""
+          src="/background.avif"
+          alt="background images"
           className="h-[200px] sm-mx:h-[150px] xsm-mx:h-[120px] w-full rounded-2xl object-cover"
         />
 
@@ -148,7 +121,7 @@ const handleImageChange = (e) => {
           <div className="relative group h-full w-full">
             {/* Avatar Image */}
             <img
-              src={selectedImage}
+              src="/avataar.jpg"
               className="h-full w-full rounded-full border-8 border-mine-shaft-950 object-contain"
             />
 

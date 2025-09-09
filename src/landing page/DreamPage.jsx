@@ -40,9 +40,7 @@ const DreamPage = () => {
       {/* Right part */}
       <div className="w-[55%]">
         <div className="flex items-center justify-center sm-mx:gap-0">
-          <img
-            src={boy}
-            alt="boy images"
+            <img src="/boys.png" alt="boys" 
              className="h-[70vh] sm-mx:h-[50vh] object-contain w-full rounded-lg"
           />
         </div>
