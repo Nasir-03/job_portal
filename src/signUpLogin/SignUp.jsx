@@ -12,6 +12,7 @@ const SignUp = () => {
   const [selectedType, setSelectedType] = useState("APPLICANT");
   const [errors, setErrors] = useState({});
   const [notification, setNotification] = useState({ msg: "", color: "" });
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -32,40 +33,46 @@ const SignUp = () => {
     }
   }, [notification]);
 
-  const handleSubmit = async () => {
-    const validationError = validateUserForm({
-      name,
-      email,
-      password,
-      termsAccepted: che,
-    });
 
-    if (Object.keys(validationError).length > 0) {
-      setErrors(validationError);
-      return;
-    }
+const handleSubmit = async () => {
+  if (loading) return; // prevent double clicks
 
-    setErrors({}); // ✅ clear previous errors if validation passed
+  const validationError = validateUserForm({
+    name,
+    email,
+    password,
+    termsAccepted: che,
+  });
 
-    const data = { name, email, password, accountType: selectedType };
-    try {
-      const response = await registerUsers(data);
-      console.log("User registered successfully:", response);
-      setNotification({ msg: "User registered successfully!", color: "green" });
-      setTimeout(() => {
-        navigate("/signup");
-      }, 2000);
-    } catch (error) {
-      console.error(
-        "Registration failed:",
-        error.response?.data || error.message
-      );
-      const errorMessage =
-        error.response?.data?.message ||
-        "Registration failed. Please try again.";
-      setNotification({ msg: errorMessage, color: "red" });
-    }
-  };
+  if (Object.keys(validationError).length > 0) {
+    setErrors(validationError);
+    return;
+  }
+
+  setErrors({});
+  setLoading(true); // 🔥 disable button while submitting
+
+  const data = { name, email, password, accountType: selectedType };
+  try {
+    const response = await registerUsers(data);
+    console.log("User registered successfully:", response);
+    setNotification({ msg: "User registered successfully!", color: "green" });
+    setTimeout(() => {
+      navigate("/signup");
+    }, 2000);
+  } catch (error) {
+    console.error(
+      "Registration failed:",
+      error.response?.data || error.message
+    );
+    const errorMessage =
+      error.response?.data?.message ||
+      "Registration failed. Please try again.";
+    setNotification({ msg: errorMessage, color: "red" });
+  } finally {
+    setLoading(false); // ✅ re-enable button
+  }
+};
 
   return (
     <div className="w-1/2 px-10 relative">
@@ -180,20 +187,18 @@ const SignUp = () => {
           </label>
         </div>
         <div className="w-[57%]">
-          {/* <button
-            className="text-xl bg-yellow-600 text-black px-2 py-2 w-full xs-mx:px-1 xs-mx:py-1 xs-mx:text-sm hover:bg-yellow-400 transition duration-300 ease-in-out rounded-full animate-spin"
-            onClick={handleSubmit}
-          >
-            sign up
-          </button> */}
-
           <button
-            className="text-xl bg-yellow-600 text-black px-2 py-2 w-full xs-mx:px-1 xs-mx:py-1 xs-mx:text-sm hover:bg-yellow-400 transition duration-300 ease-in-out rounded-full animate-spin"
-            onClick={handleSubmit}
-          >
-            {/* Optionally wrap text in a span to control rotation */}
-            <span className="inline-block">sign up</span>
-          </button>
+  className={`text-xl bg-yellow-600 text-black px-2 py-2 w-full xs-mx:px-1 xs-mx:py-1 xs-mx:text-sm transition duration-300 ease-in-out ${
+    loading ? "opacity-50 cursor-not-allowed" : "hover:bg-yellow-400"
+  }`}
+  onClick={handleSubmit}
+  disabled={loading}
+>
+  <span className="inline-block">
+    {loading ? "Signing up..." : "Sign up"}
+  </span>
+</button>
+
         </div>
         <div className="text-mine-shaft-300 text-lg">
           Have an account?{" "}

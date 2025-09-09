@@ -7,6 +7,17 @@ import About from "./About";
 import Skill from "./Skill";
 
 const Profile = () => {
+
+  useEffect(() => {
+  window.scrollTo({
+    top: 0,
+    left: 0,
+    behavior: "smooth", // you can also remove this if you want instant scroll
+  });
+}, []);
+
+
+
   return (
     <div className="w-3/4 mx-auto pt-5">
       <Info />
